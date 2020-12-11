@@ -1,8 +1,18 @@
 <template>
     <div id="app">
-        <img src="./assets/pokeapi_256.png" alt="Logo">
         <div class="column is-half is-offset-one-quarter">
-            <div v-for="(poke, index) in pokemons" :key="index">
+            <img src="./assets/pokeapi_256.png" alt="Logo">
+            <hr>
+            <div class="field has-addons">
+                <div class="control has-icons-left has-icons-right is-expanded">
+                    <label for="buscaPokemon"></label>
+                    <input type="text" v-model="busca" id="buscaPokemon" class="input is-info is-rounded" placeholder="Buscar pokemon..." >
+                </div>
+                <p class="control">
+                    <a class="button is-info is-rounded" @click="buscar">Buscar</a>
+                </p>
+            </div>
+            <div v-for="(poke, index) in filteredPokemons" :key="poke.url">
                 <Pokemon :name="poke.name" :url="poke.url" :num="index + 1" />
             </div>
         </div>
@@ -19,14 +29,26 @@
         },
         data: function() {
             return {
-                pokemons: []
+                pokemons: [],
+                filteredPokemons: [],
+                busca: ''
             }
         },
         created: function() {
             axios.get("https://pokeapi.co/api/v2/pokemon?limit=151&offset=0").then(res => {
                 this.pokemons = res.data.results;
-                console.log(`Pegou a lista de pokemons`);
+                this.filteredPokemons = res.data.results;
             });
+        },
+        methods: {
+            buscar: function() {
+                this.filteredPokemons = this.pokemons;
+                if(this.busca === '' || this.busca === ' ') {
+                    this.filteredPokemons = this.pokemons;
+                } else {
+                    this.filteredPokemons = this.pokemons.filter(pokemon => pokemon.name === this.busca);
+                }
+            }
         }
     }
 </script>
