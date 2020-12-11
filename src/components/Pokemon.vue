@@ -15,6 +15,7 @@
                 </div>
 
                 <div class="content">
+                    <button class="button is-primary is-outlined is-medium is-fullwidth" @click="mudarSprite">Mudar Sprite</button>
                 </div>
             </div>
         </div>
@@ -54,6 +55,17 @@
         filters: {
             upper: function(value) {
                 return value[0].toUpperCase() + value.slice(1);
+            }
+        },
+        methods: {
+            mudarSprite: function() {
+                if(this.isFront) {
+                    this.isFront = false;
+                    this.currentImg = this.pokemon.back;
+                } else {
+                    this.isFront = true;
+                    this.currentImg = this.pokemon.front;
+                }
             }
         }
     }
