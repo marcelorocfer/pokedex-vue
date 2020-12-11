@@ -1,6 +1,7 @@
 <template>
-    <div class="column is-half is-offset-one-quarter">
-        <div id="app">
+    <div id="app">
+        <img src="./assets/pokeapi_256.png" alt="Logo">
+        <div class="column is-half is-offset-one-quarter">
             <div v-for="(poke, index) in pokemons" :key="index">
                 <Pokemon :name="poke.name" :url="poke.url" :num="index + 1" />
             </div>
